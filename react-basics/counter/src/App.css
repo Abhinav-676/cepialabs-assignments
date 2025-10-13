@@ -1,0 +1,11 @@
+p {
+  font-size: 2rem;
+  height: 100%;
+}
+
+button {
+  height: 50px;
+  width: 50px;
+
+  margin: 0 20px;
+}
