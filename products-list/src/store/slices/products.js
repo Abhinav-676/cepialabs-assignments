@@ -3,18 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 export const productsSlice = createSlice({
     name: 'products',
     initialState: {
-        list: [],
         favorites: [],
     },
     reducers: {
-        setProducts: (state, action) => {
-            const products = action.payload
-            return {
-                ...state,
-                list: products
-            }
-        },
-
         setFavorites: (state, action) => {
             const favorites = action.payload
             return {
@@ -25,37 +16,19 @@ export const productsSlice = createSlice({
 
         addFavorite: (state, action) => {
             const productId = action.payload
-            const isAlreadyPresent = false
-            let product = null
-            state.list.forEach(prod => {
-                if (prod.id == productId) {
-                    product = prod
-                }
-            })
-            state.favorites.forEach(prod => {
-                if (prod.id == productId) {
-                    isAlreadyPresent = true
-                }
-            })
+            const newFavorites = [...state.favorites, productId]
 
-            if (!isAlreadyPresent) {
-                const newFavorites = [...state.favorites, {...product}]
-                localStorage.setItem('favorites', JSON.stringify(newFavorites))
-                return {
-                    ...state,
-                    favorites: newFavorites
-                }
-            }
-
+            localStorage.setItem('favorites', JSON.stringify(newFavorites))
             return {
-                ...state
+                ...state,
+                favorites: newFavorites
             }
         },
 
         removeFavorite: (state, action) => {
-            const productId = action.payload
-            const newFavorites = state.favorites.filter(prod => {
-                if (prod.id == productId) {
+            const id = action.payload
+            const newFavorites = state.favorites.filter(favId => {
+                if (favId == id) {
                     return false
                 }
 

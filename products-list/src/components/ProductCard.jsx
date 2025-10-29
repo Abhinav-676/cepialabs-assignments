@@ -6,7 +6,7 @@ function ProductCard({id, heading, price, rating, imgsrc}) {
     const favorites = useSelector((state) => state.products.favorites)
     const dispatch = useDispatch()
 
-    const favoriteIndicator = favorites.some(prod => prod.id == id);
+    const favoriteIndicator = favorites.some(favId => favId === id);
 
     const handleFavButtonClick = () => {
         favoriteIndicator ? dispatch(removeFavorite(id)) : dispatch(addFavorite(id))
