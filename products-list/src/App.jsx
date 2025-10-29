@@ -1,56 +1,33 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import axios from 'axios'
-import { Box, Button, Container, Flex, HStack, Input, SimpleGrid } from '@chakra-ui/react'
-import ProductCard from './components/ProductCard'
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Home from "./Home"
+import Favorites from "./Favorites"
+import Layout from "./Layout"
+import { useDispatch } from "react-redux"
+import { useEffect } from "react"
+import { setFavorites } from "./store/slices/products"
 
 function App() {
-  const [products, setProducts] = useState([])
-  const [input, setInput] = useState("")
+    const dispatch = useDispatch()
 
-  const getProducts = async () => {
-    const response = await axios.get('https://dummyjson.com/products')
+    useEffect(() => {
+    const storedFavorites = localStorage.getItem('favorites');
 
-    setProducts(response.data.products)
-  }
-  const handleSearch = () => {
-    const filteredList = products.filter(item => {
-      if (item.title.toLowerCase().includes(input.toLowerCase())) {
-        return true
-      }
+    const favorites = storedFavorites ? JSON.parse(storedFavorites) : [];
 
-      return false
-    })
+    dispatch(setFavorites(favorites));
 
-    setProducts(filteredList)
-  }
-  const reload = () => {
-    getProducts()
-  }
-  useEffect(() => {
-    getProducts()
-  }, [])
+}, []);
 
-  return (
-    <Container paddingTop="100px">
-      <Flex direction="column" alignItems="center">  
-        <Box>
-          <HStack>
-            <Input value={input} onChange={(e) => {setInput(e.target.value)}} />
-            <Button onClick={handleSearch}>Search</Button>
-            <Button onClick={reload}>Reload</Button>
-          </HStack>
-        </Box>
-        <Box marginTop="50px">
-          <SimpleGrid columns={4} gap="50px">
-            {products.map((item, i) => {
-              return <ProductCard heading={item.title} imgsrc={item.thumbnail} price={`${item.price}$`} rating={`${item.rating}/5`} key={item.id} />
-            })}
-          </SimpleGrid>
-        </Box>
-      </Flex>
-    </Container>
-  )
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<Home />} />
+                    <Route path="/favorites" element={<Favorites />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
 export default App
