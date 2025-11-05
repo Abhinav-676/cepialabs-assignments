@@ -18,30 +18,68 @@ class ValNode {
 // ES6 Classes
 export class Expression {
     constructor(exp) {
-        this.exp = exp
-        this.op_stack = ['/', '*', '+', '-']
-        this.root = this.make(exp, this.op_stack)
+        this.exp = this.parse_exp(exp)
+        this.op_priority = {
+            "-": 100,
+            "+": 100,
+            "*": 300,
+            "/": 300
+        }
+        this.root = this.make(this.exp)
     }
 
-    make(exp, op_stack) {
-        // ES6 object destructuring 
-        op_stack = [...op_stack]
-        if (op_stack.length == 0) {
-            return new ValNode(Number(exp))
-        }
+    parse_exp(raw_exp) {
+        const regex = /\d+(\.\d+)?|[+\-*/]/g;
+        const tokens = raw_exp.match(regex)
 
-        let curr_op = op_stack.pop()
-
-        for (let i = exp.length - 1; i >= 0; i--) {
-            if (exp[i] === curr_op) {
-                const l = this.make(exp.slice(0, i).trim(), this.op_stack)
-                const r = this.make(exp.slice(i + 1, exp.length).trim(), op_stack)
-
-                return new OpNode(l, r, curr_op)
+        const recursor = (tokens, i) => {
+            if (i == tokens.length - 1) {
+                return new ValNode(Number(tokens[i]))
             }
+
+            const l = new ValNode(Number(tokens[i]))
+            const op = tokens[i + 1]
+            const r = recursor(tokens, i + 2)
+
+            return new OpNode(l, r, op)
         }
 
-        return this.make(exp, op_stack)
+        return recursor(tokens, 0)
+    }
+
+    make(exp) {
+        const copy_exp = this.copy_node(exp)
+        let head = copy_exp
+
+        const recursor = (node, parent) => { 
+            if (node instanceof ValNode || node.right instanceof ValNode) {
+                return
+            }
+
+            if (this.op_priority[node.op] >= this.op_priority[node.right.op]) {
+                const right_node = node.right
+                if (node == head) {
+                    head = right_node
+                } else {
+                    parent.right = right_node
+                }
+
+                node.right = right_node.left
+                right_node.left = node
+
+                recursor(head, null)
+                return
+            }
+
+            recursor(node.right, node)
+        }
+
+        recursor(head, null)
+        return head
+    }
+
+    print_exp() {
+
     }
 
     evaluate() {
@@ -51,8 +89,8 @@ export class Expression {
                 return node;
             }
 
-            node.left = traverse_evaluate(node.left);
             node.right = traverse_evaluate(node.right);
+            node.left = traverse_evaluate(node.left);
 
             const l = node.left.val;
             const r = node.right.val;
@@ -74,16 +112,16 @@ export class Expression {
     }
 
     copy_root() {
-        // ES6 arrow functions
-        const copy_node = (node) => {
-            if (node instanceof ValNode) {
-                return new ValNode(node.val);
-            } 
+        return this.copy_node(this.root);
+    }
 
-            const leftCopy = copy_node(node.left);
-            const rightCopy = copy_node(node.right);
-            return new OpNode(leftCopy, rightCopy, node.op);
-        }
-        return copy_node(this.root);
+    copy_node(node) {
+        if (node instanceof ValNode) {
+            return new ValNode(node.val);
+        } 
+
+        const leftCopy = this.copy_node(node.left);
+        const rightCopy = this.copy_node(node.right);
+        return new OpNode(leftCopy, rightCopy, node.op);
     }
 } 
