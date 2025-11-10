@@ -8,25 +8,25 @@ function App() {
   const membersData = [
     {
       id: 1,
-      name: "Mohan",
+      name: "James",
       pass: "1234",
       count: 0
     },
     {
       id: 2,
-      name: "Sohan",
+      name: "Mike",
       pass: "1234",
       count: 0
     },
     {
       id: 3,
-      name: "Raghav",
+      name: "Jessy",
       pass: "1234",
       count: 0
     },
     {
       id: 4,
-      name: "Ranjeet",
+      name: "Lara",
       pass: "1234",
       count: 0
     },
