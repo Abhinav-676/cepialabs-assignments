@@ -8,7 +8,7 @@ function Login({id, authenticate, goBack}) {
     useEffect(() => {
         if (IsInvalid) {
             setTimeout(() => {
-                setInput(false)
+                setInvalid(false)
             }, 3000)
         }
     }, [IsInvalid])
