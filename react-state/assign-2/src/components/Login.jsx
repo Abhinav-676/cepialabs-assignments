@@ -17,7 +17,7 @@ function Login({id, authenticate, goBack}) {
         <VStack>
             {IsInvalid &&
                 <Flex backgroundColor="red.100">
-                    <Heading size="2xl">Invalid Inputs</Heading>
+                    <Heading size="2xl">Invalid Password</Heading>
                 </Flex>
             }
             <Heading size="4xl">Enter your Details</Heading>
