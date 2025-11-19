@@ -1,5 +1,4 @@
 import { Box, Container, Flex, Heading, HStack, Link } from "@chakra-ui/react";
-import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 function Navbar({logoText}) {
