@@ -62,7 +62,7 @@ function StudentDetails() {
 
     return (
         <Box bgGradient="linear(to-b, gray.50, white 60%)" minH="100vh" py={10}>
-            <Container maxW="container.md">
+            <Container maxW="breakpoint-md">
                 <Flex justifyContent='space-between' mb={6}>
                     <Button onClick={() => { navigate(-1) }} colorScheme="gray" variant="outline" borderRadius="md">Back</Button>
                     <FavoriteButton studentId={student.id} onToggle={() => { dispatch(toggleFavorite(student.id)) }} />

@@ -62,10 +62,10 @@ function Students() {
 
     return (
         <Box bgGradient="linear(to-b, gray.50, white 60%)" minH="100vh" py={10}>
-            <Container maxW="container.lg">
+            <Container maxW="breakpoint-xl">
                 <VStack gap='6'>
                     <Heading size='2xl' color="blue.700" fontWeight="extrabold" mb={2}>Students</Heading>
-                    <Box bg="white" borderRadius="2xl" boxShadow="lg" p={6} width={{ base: '100%', md: 'min-content' }}>
+                    <Box bg="white" borderRadius="2xl" boxShadow="lg" p={6}>
                         <Table.Root>
                             {students.length === 0 && <Table.Caption>No Students Found.</Table.Caption>}
                             <Table.Header>
