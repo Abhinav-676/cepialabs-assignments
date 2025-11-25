@@ -44,41 +44,41 @@ function StudentDetails() {
 
     if (loading) {
         return (
-            <Center h="vh">
-                <Spinner />
+            <Center minH="60vh">
+                <Spinner size="xl" thickness="4px" color="blue.400" />
             </Center>
         )
     }
-    
+
     if (error) {
         return (
-            <Container>
-                <Text color="red.500" mt={4}>Error: {error}</Text>
+            <Container maxW="container.md" py={10}>
+                <Box bg="red.50" borderRadius="lg" p={6} textAlign="center">
+                    <Text color="red.500" fontWeight="bold">Error: {error}</Text>
+                </Box>
             </Container>
         )
     }
 
     return (
-        <>
-        <Container>
-            <Flex justifyContent='space-between'>
-                <Button onClick={() => {navigate(-1)}}>Back</Button>
-                <FavoriteButton studentId={student.id} onToggle={() => {dispatch(toggleFavorite(student.id))}} />
-            </Flex>
-        </Container>
-        <Container paddingTop='100px' paddingBottom='154px'>
-            <Box>
-                <VStack gap='2'>
-                    <img src={student.image} alt={student.name} style={{ borderRadius: '50%', width: '150px', height: '150px' }} />
-                    <Text fontSize='2xl' fontWeight='bold' mt={4}>{student.name}</Text>
-                    <Text>Email: {student.email}</Text>
-                    <Text>Country: {student.country}</Text>
-                    <Text>Phone: {student.phone}</Text>
-                    <Text>Age: {student.age}</Text>
-                </VStack>
-            </Box>
-        </Container>
-        </>
+        <Box bgGradient="linear(to-b, gray.50, white 60%)" minH="100vh" py={10}>
+            <Container maxW="breakpoint-md">
+                <Flex justifyContent='space-between' mb={6}>
+                    <Button onClick={() => { navigate(-1) }} colorScheme="gray" variant="outline" borderRadius="md">Back</Button>
+                    <FavoriteButton studentId={student.id} onToggle={() => { dispatch(toggleFavorite(student.id)) }} />
+                </Flex>
+                <Box bg="white" borderRadius="2xl" boxShadow="lg" py={10} px={{ base: 4, md: 10 }}>
+                    <VStack gap='4'>
+                        <img src={student.image} alt={student.name} style={{ borderRadius: '50%', width: '150px', height: '150px', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }} />
+                        <Text fontSize='2xl' fontWeight='bold' mt={4} color="blue.700">{student.name}</Text>
+                        <Text>Email: <b>{student.email}</b></Text>
+                        <Text>Country: <b>{student.country}</b></Text>
+                        <Text>Phone: <b>{student.phone}</b></Text>
+                        <Text>Age: <b>{student.age}</b></Text>
+                    </VStack>
+                </Box>
+            </Container>
+        </Box>
     )
 }
 
