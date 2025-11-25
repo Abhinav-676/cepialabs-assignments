@@ -44,54 +44,58 @@ function Students() {
 
     if (loading) {
         return (
-            <Center h="vh">
-                <Spinner />
+            <Center minH="60vh">
+                <Spinner size="xl" thickness="4px" color="blue.400" />
             </Center>
         )
     }
 
     if (error) {
         return (
-            <Container>
-                <Text color="red.500" mt={4}>Error: {error}</Text>
+            <Container maxW="container.md" py={10}>
+                <Box bg="red.50" borderRadius="lg" p={6} textAlign="center">
+                    <Text color="red.500" fontWeight="bold">Error: {error}</Text>
+                </Box>
             </Container>
         )
     }
 
     return (
-        <Container minH='vh'>
-            <VStack gap='4'>
-                <Heading size='4xl' marginBottom='4'>Students</Heading>
-                <Box width='min-content'>
-                    <Table.Root>
-                        {students.length === 0 &&  <Table.Caption>No Students Found.</Table.Caption>}
-                        <Table.Header>
-                        <Table.Row>
-                            <Table.ColumnHeader>Name</Table.ColumnHeader>
-                            <Table.ColumnHeader>Email</Table.ColumnHeader>
-                            <Table.ColumnHeader>Country</Table.ColumnHeader>
-                            <Table.ColumnHeader></Table.ColumnHeader>
-                        </Table.Row>
-                        </Table.Header>
-                        <Table.Body>
-                        {students.map((s => {
-                            return <Table.Row key={s.id}>
-                            <Table.Cell>{s.name}</Table.Cell>
-                            <Table.Cell>{s.email}</Table.Cell>
-                            <Table.Cell>{s.country}</Table.Cell>
-                            <Table.Cell>
-                                <HStack gap='2'>
-                                    <Button onClick={() => {navigate(`/students/${s.id}`)}}>Profile</Button>
-                                    <FavoriteButton studentId={s.id} onToggle={() => {dispatch(toggleFavorite(s.id))}} />
-                                </HStack>
-                            </Table.Cell>
-                            </Table.Row>
-                        }))}
-                        </Table.Body>
-                    </Table.Root>
-                </Box>
-            </VStack>
-        </Container>
+        <Box bgGradient="linear(to-b, gray.50, white 60%)" minH="100vh" py={10}>
+            <Container maxW="container.lg">
+                <VStack gap='6'>
+                    <Heading size='2xl' color="blue.700" fontWeight="extrabold" mb={2}>Students</Heading>
+                    <Box bg="white" borderRadius="2xl" boxShadow="lg" p={6} width={{ base: '100%', md: 'min-content' }}>
+                        <Table.Root>
+                            {students.length === 0 && <Table.Caption>No Students Found.</Table.Caption>}
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.ColumnHeader>Name</Table.ColumnHeader>
+                                    <Table.ColumnHeader>Email</Table.ColumnHeader>
+                                    <Table.ColumnHeader>Country</Table.ColumnHeader>
+                                    <Table.ColumnHeader></Table.ColumnHeader>
+                                </Table.Row>
+                            </Table.Header>
+                            <Table.Body>
+                                {students.map((s => {
+                                    return <Table.Row key={s.id} _hover={{ bg: 'gray.50' }}>
+                                        <Table.Cell fontWeight="semibold">{s.name}</Table.Cell>
+                                        <Table.Cell>{s.email}</Table.Cell>
+                                        <Table.Cell>{s.country}</Table.Cell>
+                                        <Table.Cell>
+                                            <HStack gap='2'>
+                                                <Button onClick={() => { navigate(`/students/${s.id}`) }} colorScheme="blue" variant="outline" borderRadius="md">Profile</Button>
+                                                <FavoriteButton studentId={s.id} onToggle={() => { dispatch(toggleFavorite(s.id)) }} />
+                                            </HStack>
+                                        </Table.Cell>
+                                    </Table.Row>
+                                }))}
+                            </Table.Body>
+                        </Table.Root>
+                    </Box>
+                </VStack>
+            </Container>
+        </Box>
     )
 }
 
