@@ -6,8 +6,7 @@ import Navbar from "@/components/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "My Responsive Site",
-  description: "Created with Next.js and Tailwind",
+  title: "Assignment"
 };
 
 export default function RootLayout({
