@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "array": "tsc ./src/array.ts --outDir ./dist/ && node ./dist/array.js",
+    "boolean": "tsc ./src/boolean.ts --outDir ./dist/ && node ./dist/boolean.js",
+    "function": "tsc ./src/function.ts --outDir ./dist/ && node ./dist/function.js",
+    "number": "tsc ./src/number.ts --outDir ./dist/ && node ./dist/number.js",
+    "object": "tsc ./src/object.ts --outDir ./dist/ && node ./dist/object.js",
+    "string": "tsc ./src/string.ts --outDir ./dist/ && node ./dist/string.js"
+  }
+}
