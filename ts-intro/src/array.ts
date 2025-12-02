@@ -23,8 +23,8 @@ fruits.forEach(x => {
 })
 
 
-const arr: number[] = [1,2,3,4,5]
-function findLargest(arr: number[]): number {
+const nums: number[] = [1,2,3,4,5]
+function findLargestNum(arr: number[]): number {
     return arr.reduce((r, x) => {
         if (x > r) {
             return x
@@ -33,4 +33,4 @@ function findLargest(arr: number[]): number {
         return r
     })
 }
-console.log(`largest in ${arr} is ${findLargest(arr)}`)
+console.log(`largest in ${arr} is ${findLargestNum(arr)}`)

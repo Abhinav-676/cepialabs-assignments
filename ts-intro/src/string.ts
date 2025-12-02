@@ -17,6 +17,6 @@ console.log(username)
 const upper: string = username.toUpperCase()
 console.log(username, "->", upper)
 
-const _name: string = "Abhinav"
-const _age: string = "22"
-console.log(`Hello, my name is ${_name} and I am ${_age} years old.`)
+const personName: string = "Abhinav"
+const personAge: string = "22"
+console.log(`Hello, my name is ${personName} and I am ${personAge} years old.`)
